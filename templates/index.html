@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Hệ thống dự đoán lớp bệnh tiểu đường phục vụ mục đích học tập.">
+  <meta name="theme-color" content="#f5f8ff">
+  <title>Diabetes Prediction</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
+</head>
+<body>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 3 10 2-5h7M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg>
+      </div>
+      <div class="brand-copy">
+        <h1>Diabetes Prediction</h1>
+        <p>Hệ thống dự đoán bệnh tiểu đường</p>
+      </div>
+      <span class="learning-badge"><span></span> Mô hình sẵn sàng</span>
+    </header>
+
+    <main class="main-grid">
+      <section class="card form-card" aria-labelledby="input-title">
+        <div class="section-heading">
+          <span class="heading-icon blue" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M5.5 21v-2a6.5 6.5 0 0 1 13 0v2M3 21h18"/></svg>
+          </span>
+          <div><span class="eyebrow">Dữ liệu sức khỏe</span><h2 id="input-title">Thông tin đầu vào</h2></div>
+        </div>
+
+        <form id="prediction-form" novalidate>
+          <div class="form-list">
+            <div class="field-row" data-field="gender">
+              <label for="gender"><span class="field-icon pink">♀</span><span>Giới tính</span></label>
+              <div class="control-wrap select-wrap">
+                <select id="gender" name="gender" required>
+                  <option value="Female">Nữ (Female)</option>
+                  <option value="Male">Nam (Male)</option>
+                  <option value="Other">Khác (Other)</option>
+                </select>
+              </div>
+              <p class="field-error" id="gender-error"></p>
+            </div>
+
+            <div class="field-row" data-field="age">
+              <label for="age"><span class="field-icon blue">▦</span><span>Tuổi</span></label>
+              <div class="control-wrap has-unit"><input id="age" name="age" type="number" min="0" max="120" step="1" value="45" inputmode="numeric" required><span>tuổi</span></div>
+              <p class="field-error" id="age-error"></p>
+            </div>
+
+            <div class="field-row" data-field="hypertension">
+              <label for="hypertension"><span class="field-icon coral">♡</span><span>Tăng huyết áp</span></label>
+              <div class="control-wrap select-wrap"><select id="hypertension" name="hypertension" required><option value="0">Không (0)</option><option value="1">Có (1)</option></select></div>
+              <p class="field-error" id="hypertension-error"></p>
+            </div>
+
+            <div class="field-row" data-field="heart_disease">
+              <label for="heart_disease"><span class="field-icon coral">♥</span><span>Bệnh tim</span></label>
+              <div class="control-wrap select-wrap"><select id="heart_disease" name="heart_disease" required><option value="0">Không (0)</option><option value="1">Có (1)</option></select></div>
+              <p class="field-error" id="heart_disease-error"></p>
+            </div>
+
+            <div class="field-row" data-field="smoking_history">
+              <label for="smoking_history"><span class="field-icon orange">⌁</span><span>Lịch sử hút thuốc</span></label>
+              <div class="control-wrap select-wrap">
+                <select id="smoking_history" name="smoking_history" required>
+                  <option value="never">Chưa bao giờ</option>
+                  <option value="former">Đã từng, hiện đã bỏ</option>
+                  <option value="current">Hiện đang hút</option>
+                  <option value="not current">Hiện không hút</option>
+                  <option value="ever">Từng hút</option>
+                  <option value="No Info">Không có thông tin</option>
+                </select>
+              </div>
+              <p class="field-error" id="smoking_history-error"></p>
+            </div>
+
+            <div class="field-row" data-field="bmi">
+              <label for="bmi"><span class="field-icon indigo">⚖</span><span>Chỉ số BMI</span></label>
+              <div class="control-wrap has-unit"><input id="bmi" name="bmi" type="number" min="0.1" max="100" step="0.1" value="24.5" inputmode="decimal" required><span>kg/m²</span></div>
+              <p class="field-error" id="bmi-error"></p>
+            </div>
+
+            <div class="field-row" data-field="HbA1c_level">
+              <label for="HbA1c_level"><span class="field-icon red">♦</span><span>Mức HbA1c</span></label>
+              <div class="control-wrap has-unit"><input id="HbA1c_level" name="HbA1c_level" type="number" min="0.1" max="20" step="0.1" value="5.5" inputmode="decimal" required><span>%</span></div>
+              <p class="field-error" id="HbA1c_level-error"></p>
+            </div>
+
+            <div class="field-row" data-field="blood_glucose_level">
+              <label for="blood_glucose_level"><span class="field-icon orange">◉</span><span>Mức đường huyết</span></label>
+              <div class="control-wrap has-unit"><input id="blood_glucose_level" name="blood_glucose_level" type="number" min="1" max="1000" step="1" value="110" inputmode="decimal" required><span>mg/dL</span></div>
+              <p class="field-error" id="blood_glucose_level-error"></p>
+            </div>
+          </div>
+
+          <div id="form-error" class="form-error" role="alert" hidden></div>
+          <button class="predict-button" id="predict-button" type="submit">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V9M4 19h16M8 15l3-3 3 2 5-7M17 7h2v2"/></svg>
+            <span>Dự đoán kết quả</span>
+          </button>
+        </form>
+      </section>
+
+      <section class="card result-card" aria-labelledby="result-title" aria-live="polite">
+        <div class="section-heading">
+          <span class="heading-icon green" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M8 3h8l1 2 3 1v8l-2 1v4H6v-4l-2-1V6l3-1 1-2Z"/><path d="m9 11 2 2 4-4"/></svg>
+          </span>
+          <div><span class="eyebrow">Phân tích bằng AI</span><h2 id="result-title">Kết quả dự đoán</h2></div>
+        </div>
+
+        <div id="result-panel" class="result-panel empty">
+          <div class="result-visual" aria-hidden="true">
+            <span class="orbit orbit-one"></span><span class="orbit orbit-two"></span>
+            <div class="result-symbol">
+              <svg class="empty-icon" viewBox="0 0 24 24"><path d="M12 3a7 7 0 0 0-4 12.7V19h8v-3.3A7 7 0 0 0 12 3Z"/><path d="M9 22h6M9 10h.01M12 10h.01M15 10h.01"/></svg>
+              <svg class="success-icon" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg>
+              <svg class="warning-icon" viewBox="0 0 24 24"><path d="M12 8v5M12 17h.01"/></svg>
+            </div>
+          </div>
+          <h3 id="result-label">Chưa có kết quả</h3>
+          <div id="result-score" class="result-score" hidden>Kết quả mô hình: <strong>—</strong></div>
+          <p id="result-description">Nhập đầy đủ thông tin và chọn “Dự đoán kết quả” để bắt đầu phân tích.</p>
+        </div>
+
+        <div class="model-note">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM19 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM9 20a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM5 6v12M9 4h3a5 5 0 0 1 5 5v7M9 20h3a5 5 0 0 0 5-5"/></svg>
+          <span>Mô hình sử dụng: <strong>Random Forest</strong></span>
+        </div>
+      </section>
+    </main>
+
+    <footer class="disclaimer">
+      <span class="info-icon" aria-hidden="true">i</span>
+      <p><strong>Lưu ý:</strong> Kết quả chỉ phục vụ mục đích học tập, không thay thế chẩn đoán của chuyên gia y tế.</p>
+    </footer>
+  </div>
+
+  <script src="{{ url_for('static', path='/js/app.js') }}" defer></script>
+</body>
+</html>

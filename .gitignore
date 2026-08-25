@@ -1,0 +1,22 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.env
+.env.*
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+build/
+dist/
+*.egg-info/
+*.log
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Tài liệu yêu cầu nội bộ, không cần đưa lên repository/deploy
+DIABETES_WEB_CODEX.md
