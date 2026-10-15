@@ -1,7 +1,6 @@
 # Diabetes Prediction Web
 
-Ứng dụng Web dự đoán lớp bệnh tiểu đường bằng pipeline Machine Learning đã huấn luyện. Dự án thuộc Assignment 01 – Phát triển hệ thống thông minh và chỉ phục vụ mục đích học tập, không thay thế chẩn đoán y khoa.
-
+Ứng dụng Web dự đoán lớp bệnh tiểu đường bằng pipeline Machine Learning đã huấn luyện. 
 ## Công nghệ
 
 - Backend: Python, FastAPI, Pandas, scikit-learn, Joblib
